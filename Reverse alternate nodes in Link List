@@ -1,0 +1,142 @@
+//{ Driver Code Starts
+#include<stdio.h>
+#include<stdlib.h>
+#include<iostream>
+using namespace std;
+/* A linked list node */
+
+
+struct Node
+{
+    int data;
+    struct Node *next;
+    
+    Node(int x){
+        data = x;
+        next = NULL;
+    }
+    
+};
+
+struct Node *start = NULL;
+
+/* Function to print nodes in a given linked list */
+void printList(struct Node *node)
+{
+    while (node != NULL)
+    {
+        printf("%d ", node->data);
+        node = node->next;
+    }
+    printf("\n");
+    
+}
+
+void insert()
+{
+    int n,value;
+    cin>>n;
+    struct Node *temp;
+    for(int i=0;i<n;i++)
+    {
+        cin>>value;
+        if(i==0)
+        {
+            start = new Node(value);
+            temp = start;
+            continue;
+        }
+        else
+        {
+            temp->next = new Node(value);
+            temp = temp->next;
+        }
+    }
+}
+
+
+// } Driver Code Ends
+/*
+  reverse alternate nodes and append at the end
+  The input list will have at least one element  
+  Node is defined as 
+  struct Node
+  {
+      int data;
+      struct Node *next;
+    
+      Node(int x){
+        data = x;
+        next = NULL;
+      }
+    
+   };
+
+*/
+#include<stack>
+#include<queue>
+class Solution
+{
+    public:
+    stack<int>s;
+    queue<int>q;
+   
+    void rearrange(struct Node *odd)
+    {
+        //add code here
+         Node*h=odd->next;
+         q.push(odd->data);
+        while(h!=NULL)
+        {
+            s.push(h->data);
+            h=h->next;
+            if(h!=NULL)
+            {
+            q.push(h->data);
+            h=h->next;}
+        }
+        h=odd;
+       // while(h!=NULL)
+       // {
+            while(!q.empty())
+            {
+                h->data=q.front();
+                q.pop();
+                h=h->next;
+            }
+             while(!s.empty())
+            {
+                h->data=s.top();
+                s.pop();
+                h=h->next;
+            }
+        //}
+    }
+};
+
+
+
+//{ Driver Code Starts.
+int main()
+{
+    int t;
+    cin>>t;
+    while (t--) {
+        insert();
+        Solution ob;
+        ob.rearrange(start);
+        printList(start);
+    }
+    return 0;
+}
+
+// } Driver Code Ends
+
+Input:
+LinkedList = 10->4->9->1->3->5->9->4
+Output: 10 9 3 9 4 5 1 4
+Explanation: Reversing the alternative
+nodes from the given list, and then
+appending them to the end of the list
+results in a list with the elements as
+10 9 3 9 4 5 1 4.
