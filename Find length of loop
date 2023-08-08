@@ -1,0 +1,42 @@
+int countNodesinLoop(struct Node *head)
+{
+    if (!head) return 0;
+
+    Node* fast = head;
+    Node* slow = head;
+
+    while (fast != NULL && fast->next != NULL)
+    {
+        slow = slow->next;
+        fast = fast->next->next;
+
+        if (slow == fast)
+        {
+            // Count the nodes in the loop
+            int count = 1;
+            Node* temp = slow->next;
+            while (temp != slow)
+            {
+                temp = temp->next;
+                count++;
+            }
+            return count;
+        }
+
+Input:
+N = 10
+value[]={25,14,19,33,10,21,39,90,58,45}
+C = 4
+Output: 7
+Explanation: The loop is 45->33. So
+length of loop is 33->10->21->39->
+90->58->45 = 7. The number 33 is
+connected to the last node to form the
+loop because according to the input the
+4th node from the beginning(1 based
+index) will be connected to the last
+node for the loop.
+    }
+
+    return 0; // No loop
+}
